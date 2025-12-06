@@ -1,0 +1,592 @@
+/* Reset dan variabel */
+:root {
+  --primary-color: #4caf50;
+  --primary-dark: #388e3c;
+  --secondary-color: #f5f5f5;
+  --text-color: #333;
+  --light-gray: #e0e0e0;
+  --danger-color: #f44336;
+  --shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  --border-radius: 4px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: #f9f9f9;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header */
+header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 5px 5px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  color: white;
+  font-size: 2.5rem;
+  margin-bottom: 0;
+}
+
+.user-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#user-info {
+  font-size: 0.9rem;
+}
+
+.btn-logout {
+  background-color: white;
+  color: var(--primary-color);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.btn-logout:hover {
+  background-color: #f0f0f0;
+}
+
+/* Form styling */
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+button {
+  cursor: pointer;
+  padding: 10px 15px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.btn-add {
+  background-color: var(--primary-color);
+  color: white;
+  width: 100%;
+  padding: 12px;
+}
+
+.btn-edit {
+  background-color: #2196F3;
+  color: white;
+}
+
+.btn-delete {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.btn-save {
+  background-color: var(--primary-color);
+  color: white;
+  width: 100%;
+  padding: 12px;
+}
+
+/* Sections */
+section {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow);
+}
+
+section h2 {
+  margin-bottom: 15px;
+  color: var(--primary-dark);
+  font-size: 1.5rem;
+}
+
+/* Task list */
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid var(--light-gray);
+  transition: background-color 0.2s;
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+.task-item:hover {
+  background-color: var(--secondary-color);
+}
+
+.task-header {
+  display: flex;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.task-check {
+  margin-right: 15px;
+  padding-top: 3px;
+}
+
+.task-completed {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.task-content {
+  flex: 1;
+}
+
+.task-title {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.task-description {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.task-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Completed task styling */
+.task-item.completed .task-title {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.task-item.completed {
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: modalopen 0.3s;
+}
+
+@keyframes modalopen {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+/* Loading */
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .task-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .task-actions {
+    margin-top: 10px;
+    align-self: flex-end;
+  }
+  
+  .modal-content {
+    width: 95%;
+    margin: 20% auto;
+  }
+}
+
+/* =======================
+   Scoped styles for login page (auth-theme)
+   These are intentionally namespaced under `.auth-theme` so other pages keep the original layout and behavior.
+   ======================= */
+
+.auth-theme {
+  --oxford-blue: #0a1128;
+  --penn-blue: #001f54;
+  --indigo-dye: #034078;
+  --cerulean: #1282a2;
+  --white: #fefcfb;
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--oxford-blue), var(--penn-blue), var(--indigo-dye));
+  color: var(--white);
+}
+
+.auth-theme .login-container {
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.auth-theme .login-box {
+  background-color: var(--white);
+  border-radius: 16px;
+  padding: 40px 40px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+  width: 360px;
+  text-align: center;
+}
+
+.auth-theme .login-box h2 {
+  color: var(--indigo-dye);
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+.auth-theme .subtitle {
+  color: var(--cerulean);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.auth-theme .login-box label {
+  display: block;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--penn-blue);
+  margin-bottom: 6px;
+}
+
+.auth-theme .login-box input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--cerulean);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  background-color: #f2f6fa;
+  transition: border-color 0.3s;
+}
+
+.auth-theme .login-box input:focus {
+  border-color: var(--indigo-dye);
+  outline: none;
+}
+
+.auth-theme .btn {
+  width: 100%;
+  background-color: var(--cerulean);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.auth-theme .btn:hover {
+  background-color: var(--indigo-dye);
+  transform: translateY(-2px);
+}
+
+.auth-theme .divider {
+  position: relative;
+  margin: 18px 0;
+  text-align: center;
+  color: var(--indigo-dye);
+  font-weight: 600;
+}
+
+.auth-theme .divider::before,
+.auth-theme .divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background-color: var(--cerulean);
+}
+
+.auth-theme .divider::before { left: 0; }
+.auth-theme .divider::after { right: 0; }
+
+.auth-theme .social-login {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.auth-theme .social-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--indigo-dye);
+  color: var(--white);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.auth-theme .social-btn:hover {
+  background-color: var(--cerulean);
+  transform: scale(1.06);
+}
+
+.auth-theme .signup-text {
+  font-size: 13px;
+  color: var(--penn-blue);
+}
+
+.auth-theme .signup-text a {
+  color: var(--cerulean);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-theme .signup-text a:hover { text-decoration: underline; color: var(--indigo-dye); }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* adjust small screens */
+@media (max-width: 420px) {
+  .auth-theme .login-box { width: 92%; padding: 28px; }
+}
+
+/* =======================
+   Scoped styles for main app page (.app-theme)
+   Keeps original class/ID names for JS compatibility.
+   ======================= */
+
+.app-theme {
+  --oxford-blue: #0a1128;
+  --penn-blue: #001f54;
+  --indigo-dye: #034078;
+  --cerulean: #1282a2;
+  --white: #fefcfb;
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--oxford-blue), var(--penn-blue));
+  color: var(--white);
+}
+
+.app-theme .app-container {
+  width: 100%;
+  max-width: 1100px;
+  padding: 30px;
+}
+
+.app-theme .app-box {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 10px 40px rgba(2,6,23,0.4);
+  /* use CSS grid to create a two-column layout: form (left) + task list (right) */
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.app-theme .app-header {
+  /* header spans full width of the card and uses transparent background (no green)
+     it inherits the clean card look while headline uses indigo color */
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  background: transparent;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #eef6fb;
+}
+
+/* Override global header green inside the app theme */
+.app-theme header { background: transparent; }
+
+.app-theme .app-header .user-panel { gap:12px; }
+
+.app-theme .btn-logout {
+  /* avoid green: use indigo outline / subtle white bg */
+  background: #fff;
+  color: var(--indigo-dye);
+  border: 1px solid rgba(3,64,120,0.12);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.app-theme .btn-logout:hover { background: #f4fbff; }
+
+.app-theme h1 { color: var(--indigo-dye); margin:0; }
+.app-theme .subtitle { color: var(--cerulean); margin-top:4px; font-size:0.95rem; }
+
+.app-theme label { display:block; text-align:left; color:var(--penn-blue); font-weight:600; margin-bottom:6px; }
+
+.app-theme input[type="text"],
+.app-theme textarea {
+  width:100%; padding:10px; border:1px solid var(--cerulean); border-radius:8px; margin-bottom:14px; background:#f2f6fa; color:#003049;
+}
+
+.app-theme .btn-add, .app-theme .btn-save {
+  width:100%; background:var(--cerulean); color:var(--white); border:none; padding:12px; border-radius:8px; font-weight:600; cursor:pointer;
+}
+
+.app-theme .task-list h2, .app-theme .add-task h2 { color:var(--indigo-dye); margin-bottom:10px; }
+
+.app-theme .task-item {
+  display:flex; justify-content:space-between; align-items:center; padding:14px; border-bottom:1px solid #e6eef2; background:#fff; border-radius:8px; margin-bottom:12px; box-shadow:0 2px 6px rgba(0,0,0,0.03);
+}
+
+/* Left column: add-task card styling */
+.app-theme .add-task {
+  grid-column: 1 / 2;
+  background: #f6fbfc;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(2,6,23,0.04);
+}
+
+/* Right column: task list occupies second column */
+.app-theme .task-list {
+  grid-column: 2 / -1;
+  /* make task list its own card to visually separate it from the add-task box */
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.06);
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-theme .task-list #tasks-container { padding: 6px 0 0 0; overflow:auto; }
+
+/* Make the add-task headings slightly smaller and refined */
+.app-theme .add-task h2 { margin-top:0; margin-bottom:12px; color:var(--indigo-dye); }
+
+/* Tweak task item for a cleaner card-like list */
+.app-theme .task-item { border: 1px solid #eef6fb; }
+
+.app-theme .task-item .task-title { color: #001f54; margin:0 0 6px 0; }
+.app-theme .task-description { color:#506582; margin:0; }
+
+.app-theme .task-actions button { padding:8px 10px; border-radius:6px; }
+
+@media (max-width: 800px) {
+  .app-theme .app-box { padding:18px; }
+}
+
+/* Stack columns on smaller screens so each becomes a full-width box */
+@media (max-width: 760px) {
+  .app-theme .app-box {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  .app-theme .add-task, .app-theme .task-list {
+    grid-column: 1 / -1;
+  }
+}

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Login - Aplikasi To-Do List</title>
+        <link rel="stylesheet" href="style.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <!-- add class `auth-theme` so the new styles are scoped to this page only -->
+    <body class="auth-theme">
+        <div class="login-container">
+            <div class="login-box">
+                <h2>Welcome Back</h2>
+                <p class="subtitle">Log in to continue</p>
+
+                <!-- Error message element (kept for existing JS) -->
+                <div class="error-message" id="error-message" style="display:none;color:#f44336;margin-bottom:12px;"></div>
+
+                <!-- Tabs: keep both login and register forms but visually show login first -->
+                <div class="auth-tabs" style="display:flex; gap:10px; justify-content:center; margin-bottom:12px;">
+                    <div class="auth-tab active" data-tab="login" style="font-weight:600;cursor:pointer;">Login</div>
+                    <div class="auth-tab" data-tab="register" style="font-weight:600;cursor:pointer;">Register</div>
+                </div>
+
+                <!-- LOGIN FORM (keeps original IDs used by JS) -->
+                <form id="login-form" class="auth-form active">
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" name="username" placeholder="username" required />
+
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" placeholder="********" required />
+
+                    <button type="submit" class="btn">Login</button>
+
+                    <div class="divider"><span>OR</span></div>
+
+                    <div class="social-login">
+                        <button type="button" class="social-btn">G</button>
+                        <button type="button" class="social-btn">F</button>
+                        <button type="button" class="social-btn">X</button>
+                    </div>
+
+                    <p class="signup-text">Don’t have an account? <a href="#" class="open-register">Sign up</a></p>
+                </form>
+
+                <!-- REGISTER FORM (keeps original IDs used by JS) -->
+                <form id="register-form" class="auth-form" style="display:none;">
+                    <label for="register-username">Username</label>
+                    <input type="text" id="register-username" name="username" placeholder="username" required />
+
+                    <label for="register-email">Email (opsional)</label>
+                    <input type="email" id="register-email" name="email" placeholder="you@example.com" />
+
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" name="password" placeholder="********" required />
+
+                    <label for="register-confirm-password">Konfirmasi Password</label>
+                    <input type="password" id="register-confirm-password" name="confirm-password" placeholder="********" required />
+
+                    <button type="submit" class="btn">Register</button>
+
+                    <p class="signup-text">Already have an account? <a href="#" class="open-login">Sign in</a></p>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            // Keep original JS logic and IDs — only tab show/hide wiring adjusted for new UI
+            const loginTab = document.querySelector('.auth-tab[data-tab="login"]');
+            const registerTab = document.querySelector('.auth-tab[data-tab="register"]');
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const errorMessage = document.getElementById('error-message');
+
+            // small helpers for the new UI
+            function showLoginUI() {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginForm.style.display = '';
+                registerForm.style.display = 'none';
+                document.querySelector('.login-box h2').textContent = 'Welcome Back';
+                errorMessage.style.display = 'none';
+            }
+
+            function showRegisterUI() {
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+                registerForm.style.display = '';
+                loginForm.style.display = 'none';
+                document.querySelector('.login-box h2').textContent = 'Create Account';
+                errorMessage.style.display = 'none';
+            }
+
+            loginTab.addEventListener('click', showLoginUI);
+            registerTab.addEventListener('click', showRegisterUI);
+
+            // add small links inside forms to toggle
+            document.querySelectorAll('.open-register').forEach(el => el.addEventListener('click', (e) => { e.preventDefault(); showRegisterUI(); }));
+            document.querySelectorAll('.open-login').forEach(el => el.addEventListener('click', (e) => { e.preventDefault(); showLoginUI(); }));
+
+            // API URL (keep same)
+            const API_URL = 'http://localhost:3000/api';
+
+            // Login submit (kept from original file — unchanged behavior)
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const username = document.getElementById('login-username').value.trim();
+                const password = document.getElementById('login-password').value;
+
+                if (!username || !password) {
+                    showError('Username dan password diperlukan');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${API_URL}/auth/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password })
+                    });
+
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.error || 'Login gagal');
+
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    window.location.href = 'index.html';
+                } catch (err) {
+                    showError(err.message);
+                }
+            });
+
+            // Register submit (kept behavior)
+            registerForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const username = document.getElementById('register-username').value.trim();
+                const email = document.getElementById('register-email').value.trim();
+                const password = document.getElementById('register-password').value;
+                const confirmPassword = document.getElementById('register-confirm-password').value;
+
+                if (!username || !password) {
+                    showError('Username dan password diperlukan');
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    showError('Password tidak cocok');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${API_URL}/auth/register`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password, email: email || null })
+                    });
+
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.error || 'Registrasi gagal');
+
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    window.location.href = 'index.html';
+                } catch (err) {
+                    showError(err.message);
+                }
+            });
+
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
+            }
+
+            function checkAuth() {
+                const token = localStorage.getItem('token');
+                if (token) window.location.href = 'index.html';
+            }
+
+            checkAuth();
+        </script>
+    </body>
+</html>

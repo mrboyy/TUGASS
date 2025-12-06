@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Aplikasi To-Do List</title>
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    </head>
+    <!-- Use `app-theme` to scope the new visual style so other pages remain unchanged -->
+    <body class="app-theme">
+        <div class="app-container">
+            <div class="app-box">
+                <header class="app-header">
+                    <div>
+                        <h1>To-Do List</h1>
+                        <p class="subtitle">Kelola tugasmu dengan mudah</p>
+                    </div>
+                    <div class="user-panel">
+                        <span id="user-info"></span>
+                        <button id="logout-btn" class="btn-logout">Logout</button>
+                    </div>
+                </header>
+
+                <section class="add-task">
+                    <h2>Tambah Tugas Baru</h2>
+                    <form id="task-form">
+                        <label for="title">Judul</label>
+                        <input type="text" id="title" name="title" placeholder="Masukkan judul tugas" required />
+
+                        <label for="description">Deskripsi (opsional)</label>
+                        <textarea id="description" name="description" placeholder="Masukkan deskripsi tugas"></textarea>
+
+                        <button type="submit" class="btn-add">Tambah Tugas</button>
+                    </form>
+                </section>
+
+                <section class="task-list">
+                    <h2>Daftar Tugas</h2>
+                    <div id="tasks-container">
+                        <!-- Tasks akan ditampilkan di sini -->
+                        <div class="loading">Memuat tugas...</div>
+                    </div>
+                </section>
+
+                <!-- Modal Edit Task (unchanged IDs) -->
+                <div id="edit-modal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Edit Tugas</h2>
+                        <form id="edit-form">
+                            <input type="hidden" id="edit-id">
+                            <label for="edit-title">Judul</label>
+                            <input type="text" id="edit-title" name="edit-title" required />
+
+                            <label for="edit-description">Deskripsi (opsional)</label>
+                            <textarea id="edit-description" name="edit-description"></textarea>
+
+                            <button type="submit" class="btn-save">Simpan Perubahan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Template untuk task item (kept intact) -->
+        <template id="task-template">
+            <div class="task-item" data-id="">
+                <div class="task-header">
+                    <div class="task-check">
+                        <input type="checkbox" class="task-completed">
+                    </div>
+                    <div class="task-content">
+                        <h3 class="task-title"></h3>
+                        <p class="task-description"></p>
+                    </div>
+                </div>
+                <div class="task-actions">
+                    <button class="btn-edit">Edit</button>
+                    <button class="btn-delete">Hapus</button>
+                </div>
+            </div>
+        </template>
+
+        <script src="script.js"></script>
+    </body>
+</html>
